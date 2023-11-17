@@ -1,1 +1,1 @@
-Project to learn Rust
+Simple project to learn Rust
