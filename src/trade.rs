@@ -3,6 +3,7 @@ use crate::{types::Trade, utils::get_current_timestamp};
 static mut TRADES: Vec<Trade> = Vec::new();
 
 pub fn buy(ticker: &str, price: f64) {
+    println!("Buying {} at {}", ticker, price);
     let trade = Trade {
         ticker: ticker.to_string(),
         price,
@@ -18,6 +19,7 @@ pub fn buy(ticker: &str, price: f64) {
 pub fn sell(id: f64, price: f64) {
     unsafe {
         if let Some(trade) = TRADES.get_mut(id as usize) {
+            println!("Selling {} at {}", trade.ticker, price);
             trade.exit_timestamp = get_current_timestamp() as i64;
             trade.profit = price - trade.price;
         }
