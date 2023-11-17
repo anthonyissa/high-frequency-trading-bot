@@ -15,8 +15,19 @@ use dotenv::dotenv;
 async fn main() {
     dotenv().ok();
     loop {
-        buy_if_conditions_met().await;
-        try_closing_past_trades().await;
+        match async {
+            buy_if_conditions_met().await;
+            try_closing_past_trades().await;
+            Result::<(), Box<dyn std::error::Error>>::Ok(())
+        }
+        .await
+        {
+            Ok(_) => (),
+            Err(err) => {
+                eprintln!("An error occurred: {:?}", err);
+                continue;
+            }
+        }
         sleep(std::time::Duration::from_secs(60));
     }
 }
