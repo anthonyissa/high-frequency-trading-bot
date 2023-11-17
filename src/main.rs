@@ -1,8 +1,11 @@
 mod get_price;
 mod polygon;
+mod trade;
 mod types;
+mod utils;
 use get_price::get_price;
 use polygon::request_polygon;
+use trade::buy;
 extern crate dotenv;
 use dotenv::dotenv;
 
@@ -16,4 +19,5 @@ async fn main() {
     let price = get_price("BTCUSDT").await.unwrap();
 
     println!("{}", price);
+    buy("BTC", 100.0)
 }
