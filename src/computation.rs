@@ -21,7 +21,7 @@ pub async fn buy_if_conditions_met() {
     let obv = get_indicator_single_value("BINANCE:BTCUSDT", "obv")
         .await
         .unwrap();
-    let price = get_price("BTCUSDT").await.unwrap();
+    let price = get_price("BTC-USDT").await.unwrap();
     println!("RSI {}", rsi);
     println!("EMA {}", ema);
     println!("OBV {}", obv);
@@ -38,7 +38,7 @@ pub async fn buy_if_conditions_met() {
 pub async fn try_closing_past_trades() {
     let trades = get_unclosed_trades();
     for (index, trade) in trades.iter().enumerate() {
-        let price = get_price("BTCUSDT").await.unwrap();
+        let price = get_price("BTC-USDT").await.unwrap();
         let variation = price / trade.price;
         println!("Price {}", price);
         println!("Trade price {}", trade.price);

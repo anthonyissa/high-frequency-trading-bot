@@ -14,3 +14,15 @@ pub struct Trade {
     pub exit_timestamp: i64,
     pub profit: f64,
 }
+
+#[derive(Deserialize)]
+pub struct CoinbaseApiResponse {
+    pub data: CoinbaseData,
+}
+
+#[derive(Deserialize)]
+pub struct CoinbaseData {
+    pub amount: String,
+    pub base: String,
+    pub currency: String,
+}
