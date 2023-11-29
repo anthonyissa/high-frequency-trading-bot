@@ -45,8 +45,8 @@ pub async fn try_closing_past_trades() {
         println!("Variation {}", variation);
         if variation > 1.0 + TP || variation < 1.0 - SL {
             println!("Closing trade with profit {}", price - trade.price);
-            sell(index as f64, price)
+            sell(index as f64, price);
+            println!("All trades: {:?}", trades);
         }
     }
-    println!("All trades: {:?}", trades);
 }
