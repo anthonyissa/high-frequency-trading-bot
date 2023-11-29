@@ -5,9 +5,12 @@ use crate::{
 };
 
 static TP: f64 = 0.005;
-static SL: f64 = 0.002;
+static SL: f64 = 0.004;
 
 pub async fn buy_if_conditions_met() {
+    if (get_unclosed_trades().len() as f64) > 0.0 {
+        return;
+    }
     println!("Computing indicators data...");
     let rsi = get_indicator_single_value("BINANCE:BTCUSDT", "rsi")
         .await
@@ -37,9 +40,13 @@ pub async fn try_closing_past_trades() {
     for (index, trade) in trades.iter().enumerate() {
         let price = get_price("BTCUSDT").await.unwrap();
         let variation = price / trade.price;
+        println!("Price {}", price);
+        println!("Trade price {}", trade.price);
+        println!("Variation {}", variation);
         if variation > 1.0 + TP || variation < 1.0 - SL {
             println!("Closing trade with profit {}", price - trade.price);
             sell(index as f64, price)
         }
     }
+    println!("All trades: {:?}", trades);
 }
