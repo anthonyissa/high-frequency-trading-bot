@@ -51,7 +51,6 @@ pub async fn get_indicator_single_value(
 }
 
 pub fn format_indicator_response(response: String, indicator: &str) -> f64 {
-    println!("Response: {}", response);
     if response.contains("no_data") {
         println!("Error No Data for indicator {}: {}", indicator, response);
         return 0.0;

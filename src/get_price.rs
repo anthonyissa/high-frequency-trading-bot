@@ -3,6 +3,7 @@ use types::BinanceApiResponse;
 use crate::types;
 
 pub fn format_response(response: String) -> f64 {
+    println!("Response: {}", response);
     let binance_response: BinanceApiResponse = serde_json::from_str(&response).unwrap();
     binance_response.price.parse::<f64>().unwrap()
 }
