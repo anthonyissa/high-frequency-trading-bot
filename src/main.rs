@@ -28,6 +28,6 @@ async fn main() {
                 continue;
             }
         }
-        sleep(std::time::Duration::from_secs(30));
+        sleep(std::time::Duration::from_secs(60));
     }
 }
