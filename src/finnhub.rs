@@ -51,6 +51,10 @@ pub async fn get_indicator_single_value(
 }
 
 pub fn format_indicator_response(response: String, indicator: &str) -> f64 {
+    if response.contains("no_data") {
+        println!("Error No Data for indicator {}: {}", indicator, response);
+        return 0.0;
+    }
     let formatted: serde_json::Value = serde_json::from_str(&response).unwrap();
     let lastIndex = formatted[indicator].as_array().unwrap().len() - 1;
     let value = formatted[indicator][lastIndex].as_f64();

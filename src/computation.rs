@@ -23,6 +23,10 @@ pub async fn buy_if_conditions_met() {
     println!("EMA {}", ema);
     println!("OBV {}", obv);
     println!("Price {}", price);
+    if rsi == 0.0 || ema == 0.0 || obv == 0.0 {
+        println!("Avoiding buying because of 0 values");
+        return;
+    }
     if rsi < 30.0 && price < ema && obv > 0.0 {
         buy("BTC", price)
     }
