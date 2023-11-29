@@ -1,7 +1,6 @@
 use crate::types::{self, CoinbaseApiResponse};
 
 pub fn format_response(response: String) -> f64 {
-    println!("Response: {}", response);
     let coinbase_response: CoinbaseApiResponse = serde_json::from_str(&response).unwrap();
     let price = coinbase_response.data.amount.parse::<f64>().unwrap();
     return price;

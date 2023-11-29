@@ -1,6 +1,7 @@
 use crate::{
     finnhub::get_indicator_single_value,
     get_price::get_price,
+    notification::send_notification,
     trade::{buy, get_unclosed_trades, sell, show_trades},
 };
 
@@ -44,8 +45,11 @@ pub async fn try_closing_past_trades() {
         println!("Trade price {}", trade.price);
         println!("Variation {}", variation);
         if variation > 1.0 + TP || variation < 1.0 - SL {
-            println!("Closing trade with profit {}", price - trade.price);
             sell(index as f64, price);
+            let msg =
+                "Closing trade with profit {}".replace("{}", &(price - trade.price).to_string());
+            println!("{}", msg);
+            send_notification(&msg).await;
             show_trades();
         }
     }
