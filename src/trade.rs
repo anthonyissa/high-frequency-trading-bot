@@ -1,10 +1,15 @@
 use crate::{types::Trade, utils::get_current_timestamp};
 
 static mut TRADES: Vec<Trade> = Vec::new();
+static mut ID: f64 = 0.0;
 
 pub fn buy(ticker: &str, price: f64) {
     println!("**** Buying {} at {} ****", ticker, price);
     let trade = Trade {
+        id: unsafe {
+            ID += 1.0;
+            ID
+        },
         ticker: ticker.to_string(),
         price,
         entry_timestamp: get_current_timestamp() as i64,
@@ -18,11 +23,10 @@ pub fn buy(ticker: &str, price: f64) {
 
 pub fn sell(id: f64, price: f64) {
     unsafe {
-        if let Some(trade) = TRADES.get_mut(id as usize) {
-            println!("**** Selling {} at {} ****", trade.ticker, price);
-            trade.exit_timestamp = get_current_timestamp() as i64;
-            trade.profit = price - trade.price;
-        }
+        let trade = TRADES.iter_mut().find(|trade| trade.id == id).unwrap();
+        println!("**** Selling {} at {} ****", trade.ticker, price);
+        trade.exit_timestamp = get_current_timestamp() as i64;
+        trade.profit = price - trade.price;
     }
 }
 

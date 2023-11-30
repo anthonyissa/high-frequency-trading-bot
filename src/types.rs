@@ -8,6 +8,7 @@ pub struct BinanceApiResponse {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Trade {
+    pub id: f64,
     pub ticker: String,
     pub price: f64,
     pub entry_timestamp: i64,

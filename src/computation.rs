@@ -40,14 +40,14 @@ pub async fn buy_if_conditions_met() {
 
 pub async fn try_closing_past_trades() {
     let trades = get_unclosed_trades();
-    for (index, trade) in trades.iter().enumerate() {
+    for (_, trade) in trades.iter().enumerate() {
         let price = get_price("BTC-USDT").await.unwrap();
         let variation = price / trade.price;
         println!("Price {}", price);
         println!("Trade price {}", trade.price);
         println!("Variation {}", variation);
         if variation > 1.0 + TP || variation < 1.0 - SL {
-            sell(index as f64, price);
+            sell(trade.id, price);
             let msg =
                 "Closing trade with profit {}".replace("{}", &(price - trade.price).to_string());
             println!("{}", msg);
