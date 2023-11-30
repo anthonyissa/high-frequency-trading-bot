@@ -2,7 +2,7 @@ use crate::{
     finnhub::get_indicator_single_value,
     get_price::get_price,
     notification::send_notification,
-    trade::{buy, get_unclosed_trades, sell, show_trades},
+    trade::{buy, get_unclosed_trades, sell, show_stats, show_trades},
 };
 
 static TP: f64 = 0.005;
@@ -32,7 +32,8 @@ pub async fn buy_if_conditions_met() {
         return;
     }
     if rsi < 30.0 && price < ema && obv > 0.0 {
-        buy("BTC", price)
+        buy("BTC", price);
+        send_notification("Buying BTC").await;
     }
 }
 
@@ -51,6 +52,7 @@ pub async fn try_closing_past_trades() {
             println!("{}", msg);
             send_notification(&msg).await;
             show_trades();
+            show_stats();
         }
     }
 }
