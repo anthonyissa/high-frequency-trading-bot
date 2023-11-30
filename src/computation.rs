@@ -5,8 +5,8 @@ use crate::{
     trade::{buy, get_unclosed_trades, sell, show_stats, show_trades},
 };
 
-static TP: f64 = 0.005;
-static SL: f64 = 0.004;
+static TP: f64 = 0.0006;
+static SL: f64 = 0.0004;
 
 pub async fn buy_if_conditions_met() {
     if (get_unclosed_trades().len() as f64) > 0.0 {
