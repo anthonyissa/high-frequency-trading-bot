@@ -1,6 +1,7 @@
 mod computation;
 mod finnhub;
 mod get_price;
+mod indicators;
 mod notification;
 mod trade;
 mod types;
