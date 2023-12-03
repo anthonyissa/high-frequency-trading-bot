@@ -50,7 +50,7 @@ pub fn show_trades() {
     }
 }
 
-pub fn show_stats() {
+pub fn show_stats() -> (f64, usize, usize) {
     unsafe {
         let mut total_profit = 0.0;
         let mut total_trades = 0;
@@ -67,5 +67,6 @@ pub fn show_stats() {
         println!("Total profit {}", total_profit);
         println!("Total open trades {}", total_open_trades);
         println!("Total trades {}", total_trades);
+        return (total_profit, total_open_trades, total_trades);
     }
 }

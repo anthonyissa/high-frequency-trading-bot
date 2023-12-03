@@ -32,7 +32,7 @@ pub async fn buy_if_conditions_met() {
         println!("Avoiding buying because of 0 values");
         return;
     }
-    if rsi < 30.0 {
+    if rsi < 20.0 {
         buy("BTC", price);
         send_notification("Buying BTC").await;
     }
@@ -48,12 +48,16 @@ pub async fn try_closing_past_trades() {
         println!("Variation {}", variation);
         if variation > 1.0 + TP || variation < 1.0 - SL {
             sell(trade.id, price);
-            let msg =
+            show_trades();
+            let mut msg =
                 "Closing trade with profit {}".replace("{}", &(price - trade.price).to_string());
+            let stats = show_stats();
+            msg.push_str(&format!(
+                "\nTotal profit: {}\nTotal open trades: {}\nTotal trades: {}",
+                stats.0, stats.1, stats.2
+            ));
             println!("{}", msg);
             send_notification(&msg).await;
-            show_trades();
-            show_stats();
         }
     }
 }
