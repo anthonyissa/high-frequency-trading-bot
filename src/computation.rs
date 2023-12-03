@@ -33,7 +33,7 @@ pub async fn buy_if_conditions_met() {
         println!("Avoiding buying because of 0 values");
         return;
     }
-    if rsi < 20.0 && price < ema {
+    if rsi < 30.0 && price < ema {
         buy("BTC", price);
         send_notification("Buying BTC").await;
     }
