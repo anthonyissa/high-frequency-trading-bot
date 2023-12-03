@@ -1,6 +1,6 @@
 use crate::{
     get_price::get_price,
-    indicators::get_rsi,
+    indicators::{get_ema, get_rsi},
     notification::send_notification,
     trade::{buy, get_unclosed_trades, sell, show_stats, show_trades},
 };
@@ -22,17 +22,18 @@ pub async fn buy_if_conditions_met() {
     // let obv = get_indicator_single_value("BINANCE:BTCUSDT", "obv")
     //     .await
     //     .unwrap();
-    let rsi = get_rsi();
     let price = get_price("BTC-USDT").await.unwrap();
+    let rsi = get_rsi();
+    let ema = get_ema();
     println!("RSI {}", rsi);
-    // println!("EMA {}", ema);
+    println!("EMA {}", ema);
     // println!("OBV {}", obv);
     println!("Price {}", price);
-    if rsi == 0.0 {
+    if rsi == 0.0 || ema == 0.0 {
         println!("Avoiding buying because of 0 values");
         return;
     }
-    if rsi < 20.0 {
+    if rsi < 20.0 && price < ema {
         buy("BTC", price);
         send_notification("Buying BTC").await;
     }

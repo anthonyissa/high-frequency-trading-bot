@@ -35,3 +35,19 @@ pub fn get_rsi() -> f64 {
     let rsi = 100.0 - (100.0 / (1.0 + rs));
     rsi
 }
+
+pub fn get_ema() -> f64 {
+    if get_prices().len() < 14 {
+        return 0.0;
+    }
+    let prices = get_prices();
+    let mut ema = 0.0;
+    for (index, price) in prices.iter().enumerate() {
+        if index == 0 {
+            ema = *price;
+            continue;
+        }
+        ema = (2.0 / (index as f64 + 1.0)) * (price - ema) + ema;
+    }
+    ema
+}
