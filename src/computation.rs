@@ -5,8 +5,8 @@ use crate::{
     trade::{buy, get_unclosed_trades, sell, show_stats, show_trades},
 };
 
-static TP: f64 = 0.0006;
-static SL: f64 = 0.0004;
+static TP: f64 = 0.0020;
+static SL: f64 = 0.0013;
 
 pub async fn buy_if_conditions_met() {
     if (get_unclosed_trades().len() as f64) > 0.0 {
@@ -54,7 +54,7 @@ pub async fn try_closing_past_trades() {
                 "Closing trade with profit {}".replace("{}", &(price - trade.price).to_string());
             let stats = show_stats();
             msg.push_str(&format!(
-                "\nTotal profit: {}\nTotal open trades: {}\nTotal trades: {}",
+                "%0ATotal profit: {}%0ATotal open trades: {}%0ATotal trades: {}",
                 stats.0, stats.1, stats.2
             ));
             println!("{}", msg);
