@@ -1,3 +1,5 @@
+use std::os::windows::thread;
+
 use crate::get_price::get_prices;
 
 pub fn get_rsi() -> f64 {
@@ -50,4 +52,10 @@ pub fn get_ema() -> f64 {
         ema = (2.0 / (index as f64 + 1.0)) * (price - ema) + ema;
     }
     ema
+}
+
+pub fn get_all_indicators() -> (f64, f64) {
+    let rsi: f64 = std::thread::spawn(|| get_rsi()).join().unwrap();
+    let ema: f64 = std::thread::spawn(|| get_ema()).join().unwrap();
+    (rsi, ema)
 }
